@@ -1,0 +1,9 @@
+# folders
+node_modules/
+dist/
+
+# private variables
+.env
+
+# config files
+package-lock.json
