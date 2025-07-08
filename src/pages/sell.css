@@ -1,0 +1,32 @@
+.sell-page {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+}
+
+.sell-form input,
+.sell-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: inherit;
+  color: inherit;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 250px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.sell-error {
+  color: #d9534f;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 2rem;
+}
