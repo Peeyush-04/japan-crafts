@@ -1,0 +1,133 @@
+/* --- Base Layout --- */
+.navbar {
+  padding: 1rem 2rem;
+  font-weight: bold;
+  font-family: 'Noto Serif JP', serif;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+  z-index: 1000;
+}
+
+.nav-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-logo {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+/* Theme Toggle Icon */
+.theme-toggle-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: inherit;
+}
+
+/* Auth Buttons */
+.auth-link,
+.profile-link {
+  text-decoration: none;
+  color: #a73830;
+  font-weight: 600;
+}
+
+.logout-button {
+  background-color: #a73830;
+  color: #fff;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.logout-button:hover {
+  background-color: #8c2f26;
+}
+
+/* --- Hamburger Menu --- */
+.hamburger {
+  display: none;
+  cursor: pointer;
+}
+
+/* --- Mobile View --- */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+    color: inherit;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-light);
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem 2rem;
+    gap: 1rem;
+    display: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+  }
+
+  .app-dark .nav-links {
+    background-color: var(--bg-dark);
+  }
+
+  .nav-links.show {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .nav-links a,
+  .logout-button,
+  .theme-toggle-icon {
+    width: 100%;
+    text-align: left;
+    margin: 0.5rem 0;
+  }
+}
+
+/* --- Desktop Force Reset --- */
+@media (min-width: 769px) {
+  .nav-links {
+    display: flex !important;
+    position: static;
+    flex-direction: row;
+    background: none;
+    box-shadow: none;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .theme-toggle-icon {
+    margin-left: 1rem;
+  }
+
+  .nav-links a,
+  .logout-button {
+    margin-left: 1rem;
+  }
+}
