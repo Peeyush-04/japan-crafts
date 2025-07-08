@@ -18,7 +18,7 @@ export default function Navbar() {
   return (
     <nav className={`navbar ${theme}`}>
       <div className="nav-top">
-        <Link to="/" className="nav-logo">Japan Crafts</Link>
+        <Link to="/home" className="nav-logo">Japan Crafts</Link>
         <div className="hamburger" onClick={handleToggleMenu}>
           {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
         </div>
