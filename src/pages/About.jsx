@@ -4,6 +4,7 @@ import gallery1 from "../assets/gallery1.webp";
 import gallery2 from "../assets/gallery2.png";
 import gallery3 from "../assets/gallery3.webp";
 import { useTheme } from '../context/ThemeContext';
+import { Link } from "react-router-dom";
 
 export default function About() {
   const { theme } = useTheme();
@@ -76,7 +77,7 @@ export default function About() {
       <section className="about-cta">
         <h2>Become a Patron of Tradition</h2>
         <p>Support artisans. Own heritage. Buy a piece of Japan today.</p>
-        <a href="/buy" className="cta-button">Start Exploring</a>
+        <Link href="/buy" className="cta-button">Start Exploring</Link>
       </section>
     </div>
   );
