@@ -23,6 +23,8 @@ export default function Sell() {
   useEffect(() => {
     if (!user || !user.address || !user.phone) {
       setError("Please complete your profile before selling.");
+    } else {
+      setError("");
     }
   }, [user]);
 
@@ -31,16 +33,51 @@ export default function Sell() {
     setForm({ ...form, [name]: value });
   };
 
-  const handleImage = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+  const resizeImage = (file, maxSize = 800) => {
+    return new Promise((resolve) => {
+      const img = new Image();
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm({ ...form, image: reader.result });
-        setPreview(reader.result);
+
+      reader.onload = (e) => {
+        img.src = e.target.result;
       };
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const scale = Math.min(maxSize / img.width, maxSize / img.height);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const resizedBase64 = canvas.toDataURL("image/jpeg", 0.7); // 70% quality
+        resolve(resizedBase64);
+      };
+
       reader.readAsDataURL(file);
+    });
+  };
+
+  const handleImage = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Basic validation
+    if (!file.type.startsWith("image/")) {
+      setError("Only image files are allowed.");
+      return;
     }
+    if (file.size > 3 * 1024 * 1024) {
+      setError("Image is too large. Max allowed size is 3MB.");
+      return;
+    }
+    if (file.size > 1.5 * 1024 * 1024) {
+      alert("Warning: Large image selected. It will be compressed to reduce size.");
+    }
+
+    const resizedImage = await resizeImage(file);
+    setForm({ ...form, image: resizedImage });
+    setPreview(resizedImage);
   };
 
   const handleSubmit = (e) => {

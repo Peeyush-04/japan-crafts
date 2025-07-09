@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTheme } from "../context/ThemeContext";
-import "./sell.css"; // Reuse styles from sell form
+import "./sell.css";
 
 export default function EditProduct() {
   const { id } = useParams();
@@ -25,15 +25,49 @@ export default function EditProduct() {
     setProduct((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleImage = (e) => {
-    const file = e.target.files[0];
-    if (file) {
+  const resizeImage = (file, maxSize = 800) => {
+    return new Promise((resolve) => {
+      const img = new Image();
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setProduct((prev) => ({ ...prev, image: reader.result }));
+
+      reader.onload = (e) => {
+        img.src = e.target.result;
       };
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const scale = Math.min(maxSize / img.width, maxSize / img.height);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const resizedBase64 = canvas.toDataURL("image/jpeg", 0.7); // 70% quality
+        resolve(resizedBase64);
+      };
+
       reader.readAsDataURL(file);
+    });
+  };
+
+  const handleImage = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setError("Only image files are allowed.");
+      return;
     }
+    if (file.size > 3 * 1024 * 1024) {
+      setError("Image is too large. Max allowed size is 3MB.");
+      return;
+    }
+    if (file.size > 1.5 * 1024 * 1024) {
+      alert("Warning: Large image selected. It will be compressed to reduce size.");
+    }
+
+    const resizedImage = await resizeImage(file);
+    setProduct((prev) => ({ ...prev, image: resizedImage }));
   };
 
   const handleSubmit = (e) => {
@@ -49,7 +83,7 @@ export default function EditProduct() {
     navigate("/profile");
   };
 
-  if (error) return <div className={`sell-page ${theme}`}><p>{error}</p></div>;
+  if (error) return <div className={`sell-page ${theme}`}><p className="sell-error">{error}</p></div>;
   if (!product) return null;
 
   return (
