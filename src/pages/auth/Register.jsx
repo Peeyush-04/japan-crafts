@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 import "./auth.css";
 
 export default function Register() {
@@ -101,7 +102,7 @@ export default function Register() {
 
         <button className="auth-button" type="submit">Register</button>
         <p className="switch-text">
-          Already have an account? <a href="/auth/login">Login</a>
+          Already have an account? <Link href="/auth/login">Login</Link>
         </p>
       </form>
     </div>

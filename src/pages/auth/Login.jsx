@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from '../../context/ThemeContext';
 import { useAuth } from '../../context/AuthContext';
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 import './auth.css';
 
 export default function Login() {
@@ -50,7 +51,7 @@ export default function Login() {
         />
         <button className="auth-button" type="submit">Login</button>
         <p className="switch-text">
-          Don’t have an account? <a href="/auth/register">Register here</a>
+          Don’t have an account? <Link href="/auth/register">Register here</Link>
         </p>
       </form>
     </div>
