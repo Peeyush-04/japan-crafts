@@ -13,7 +13,7 @@ import EditProduct from "./pages/EditProduct";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/japan-crafts">
       <Navbar />
       <Routes>
         <Route path="/" element={<About />} />
